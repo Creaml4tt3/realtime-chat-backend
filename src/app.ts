@@ -1,10 +1,16 @@
-import express, { Express, Request, Response } from "express";
+import express, { Express, Request, Response, NextFunction } from "express";
 import bodyParser from "body-parser";
+const passport = require("passport");
+
+require("./utilities/socket");
+require("./configs/passport");
+const auth = require("./routes/auth");
+const user = require("./routes/user");
 
 require("dotenv").config();
 
 const app: Express = express();
-const port: number = Number(process.env.EXPRESS_PORT);
+const port: number = Number(process.env.EXPRESS_PORT) || 3000;
 
 app.use(bodyParser.json());
 app.use(
@@ -13,33 +19,23 @@ app.use(
   })
 );
 
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+  const statusCode = res.status(err);
+  res.json({
+    error: {
+      status: statusCode,
+      message: err.message,
+    },
+  });
+});
+
 app.get("/", (req: Request, res: Response) => {
   res.json({
     message: "Hello Express + TypeScirpt!!",
   });
 });
 
-// app.listen(port, () => console.log(`Application is running on port ${port}`));
+app.use("/auth", auth);
+app.use("/user", passport.authenticate("jwt", { session: false }), user);
 
-import { Server } from "socket.io";
-const io = new Server({
-  cors: {
-    origin: "http://localhost:3000",
-  },
-});
-io.on("connection", (client: any) => {
-  console.log(`user connected ${client}`);
-  client.on("event", (data: any) => {
-    console.log(data);
-  });
-  client.on("disconnect", () => {
-    console.log("user disconnected");
-  });
-  client.on("sent-message", function (message: any) {
-    io.sockets.emit("new-message", message);
-  });
-  client.on("create-something", function (message: any) {
-    io.sockets.emit("foo", message);
-  });
-});
-io.listen(Number(process.env.SOCKET_PORT));
+app.listen(port, () => console.log(`Application is running on port ${port}`));
