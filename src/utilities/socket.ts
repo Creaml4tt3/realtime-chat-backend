@@ -1,4 +1,5 @@
 import { Server } from "socket.io";
+import { createMessage } from "./prisma";
 
 require("dotenv").config();
 
@@ -8,18 +9,17 @@ const io = new Server({
   },
 });
 io.on("connection", (client: any) => {
-  console.log(`user connected ${client}`);
+  // console.log(`user connected ${client}`);
+  console.log("user connected");
   client.on("event", (data: any) => {
     console.log(data);
   });
   client.on("disconnect", () => {
     console.log("user disconnected");
   });
-  client.on("sent-message", function (message: any) {
-    io.sockets.emit("new-message", message);
-  });
-  client.on("create-something", function (message: any) {
-    io.sockets.emit("foo", message);
+  client.on("message:create", function (data: message) {
+    createMessage(data);
+    io.sockets.emit("message:recieve", data);
   });
 });
 

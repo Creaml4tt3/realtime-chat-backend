@@ -2,20 +2,9 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 
 import bcrypt from "bcrypt";
-import { PrismaClient } from "@prisma/client";
+const { findUser } = require("../utilities/prisma");
 
 require("dotenv").config();
-
-const prisma = new PrismaClient();
-
-async function findUser(email: string) {
-  const user = await prisma.user.findUnique({
-    where: {
-      email: email,
-    },
-  });
-  return user;
-}
 
 async function checkVaild(user: any, password: string) {
   try {
@@ -60,13 +49,17 @@ passport.use(
       secretOrKey: process.env.SECRET_ACCESS_TOKEN,
     },
     (jwtPayload: any, cb: Function) => {
-      return findUser(jwtPayload?.email)
-        .then((user) => {
-          return cb(null, user);
-        })
-        .catch((err) => {
-          return cb(err);
-        });
+      return cb(null, jwtPayload);
     }
   )
 );
+
+// passport.serializeUser((user: any, cb: Function) => {
+//   console.log("SerializeUser");
+//   cb(null, user);
+// });
+
+// passport.deserializeUser((user: any, cb: Function) => {
+//   console.log("DeserializeUser");
+//   cb(null, user);
+// });

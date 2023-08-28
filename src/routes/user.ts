@@ -1,14 +1,17 @@
 import { Request, Response, NextFunction } from "express";
 const router = require("express").Router();
 
-/* GET users listing. */
 router.get("/", (req: Request, res: Response, next: NextFunction) => {
-  res.send("respond with a resource");
+  res.json("respond with a resource");
 });
 
-/* GET user profile. */
 router.get("/profile", (req: Request, res: Response, next: NextFunction) => {
-  res.send(req);
+  delete req.user.refresh_token;
+  delete req.user.password;
+  delete req.user.deleted;
+  delete req.user.iat;
+  delete req.user.exp;
+  res.json(req.user);
 });
 
 module.exports = router;

@@ -12,10 +12,11 @@ datasource db {
 
 model User {
   id    Int     @id @default(autoincrement())
+  refresh_token String?
   email String  @unique
-  username String @unique
   password String
   name  String?
+  photo String?
   messages Message[]
   createa_at DateTime @default(now())
   updated_at DateTime @default(now())
@@ -25,9 +26,8 @@ model User {
 model Message {
   id        Int     @id @default(autoincrement())
   text      String
-  content   String?
-  author    User    @relation(fields: [authorId], references: [id])
-  authorId  Int
+  author    User    @relation(fields: [author_email], references: [email])
+  author_email  String
   createa_at DateTime @default(now())
   updated_at DateTime @default(now())
   deleted Boolean @default(false)
