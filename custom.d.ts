@@ -10,7 +10,6 @@ declare namespace Express {
 
 interface userData {
   email: string;
-  username: string;
   password: string;
   photo?: string;
   name: string;

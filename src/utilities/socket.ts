@@ -9,11 +9,10 @@ const io = new Server({
   },
 });
 io.on("connection", (client: any) => {
-  // console.log(`user connected ${client}`);
   console.log("user connected");
-  client.on("event", (data: any) => {
-    console.log(data);
-  });
+  // client.on("event", (data: any) => {
+  //   console.log(data);
+  // });
   client.on("disconnect", () => {
     console.log("user disconnected");
   });

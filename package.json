@@ -1,5 +1,5 @@
 {
-  "name": "realtime-chat",
+  "name": "realtime-chat-backend",
   "version": "1.0.0",
   "scripts": {
     "start": "ts-node src/app.ts",

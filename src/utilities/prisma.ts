@@ -4,12 +4,13 @@ require("dotenv").config();
 
 //? passport User CRUD
 export async function createUser(userData: userData) {
-  const { email, password, name } = userData;
+  const { email, password, name, photo } = userData;
   const user = await prisma.user.create({
     data: {
       email,
       password,
       name,
+      photo,
     },
   });
   return user;
