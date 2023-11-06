@@ -17,7 +17,7 @@ const user = require("./routes/user");
 const chat = require("./routes/chat");
 require("dotenv").config();
 const app = (0, express_1.default)();
-const port = Number(process.env.EXPRESS_PORT) || 3000;
+const port = Number(process.env.PORT) || 8080;
 app.use(body_parser_1.default.urlencoded({
     extended: true,
 }));

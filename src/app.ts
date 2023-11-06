@@ -15,7 +15,7 @@ const chat = require("./routes/chat");
 require("dotenv").config();
 
 const app: Express = express();
-const port: number = Number(process.env.EXPRESS_PORT) || 3000;
+const port: number = Number(process.env.PORT) || 8080;
 
 app.use(
   bodyParser.urlencoded({
