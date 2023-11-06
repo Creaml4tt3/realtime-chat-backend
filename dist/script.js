@@ -1,8 +1,7 @@
+"use strict";
 // import bcrypt from "bcrypt";
 // import { PrismaClient } from "@prisma/client";
-
 // const prisma = new PrismaClient();
-
 // async function main() {
 //   const user = await prisma.user.create({
 //     data: {
@@ -14,7 +13,6 @@
 //   });
 //   console.log(user);
 // }
-
 // main()
 //   .then(async () => {
 //     await prisma.$disconnect();
