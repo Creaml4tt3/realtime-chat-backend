@@ -24,6 +24,7 @@ app.use(
 );
 app.use(bodyParser.json());
 app.use(cors({ origin: process.env.FRONT_URL }));
+app.use(express.static("public"));
 // app.use(methodOverride());
 // app.use(cookieParser());
 // app.use(

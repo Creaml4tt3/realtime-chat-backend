@@ -23,6 +23,7 @@ app.use(body_parser_1.default.urlencoded({
 }));
 app.use(body_parser_1.default.json());
 app.use(cors({ origin: process.env.FRONT_URL }));
+app.use(express_1.default.static("public"));
 // app.use(methodOverride());
 // app.use(cookieParser());
 // app.use(
