@@ -9,7 +9,8 @@
     "build": "rimraf dist && tsc",
     "ts.check": "tsc --project tsconfig.json",
     "add-build": "git add dist",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "start:prod": "node dist/app.js"
   },
   "pre-commit": [
     "ts.check",
