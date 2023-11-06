@@ -2,11 +2,14 @@ import express, { Express, Request, Response, NextFunction } from "express";
 import bodyParser from "body-parser";
 const cors = require("cors");
 const passport = require("passport");
+
 // const cookieParser = require("cookie-parser");
 // const session = require("express-session");
 // const methodOverride = require("method-override");
 
-require("./utilities/socket");
+import http from "http";
+import socketIo from "socket.io";
+import handleSocketConnection from "./utilities/socket";
 require("./configs/passport");
 const auth = require("./routes/auth");
 const user = require("./routes/user");
@@ -47,6 +50,13 @@ app.use("/auth", auth);
 app.use("/user", passport.authenticate("jwt", { session: false }), user);
 app.use("/chat", chat);
 
-app.listen(port, () => console.log(`Application is running on port ${port}`));
+const server = http.createServer(app);
+const io = new socketIo.Server(server);
+
+handleSocketConnection(io);
+
+server.listen(port, () =>
+  console.log(`Application is running on port ${port}`)
+);
 
 module.exports = app;
