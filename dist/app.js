@@ -17,7 +17,7 @@ const user = require("./routes/user");
 const chat = require("./routes/chat");
 require("dotenv").config();
 const app = (0, express_1.default)();
-const port = Number(process.env.EXPRESS_PORT) || 3060;
+const port = Number(process.env.EXPRESS_PORT) || 3000;
 app.use(body_parser_1.default.urlencoded({
     extended: true,
 }));
@@ -44,3 +44,4 @@ app.use("/auth", auth);
 app.use("/user", passport.authenticate("jwt", { session: false }), user);
 app.use("/chat", chat);
 app.listen(port, () => console.log(`Application is running on port ${port}`));
+module.exports = app;

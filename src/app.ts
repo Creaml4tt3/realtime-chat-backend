@@ -15,7 +15,7 @@ const chat = require("./routes/chat");
 require("dotenv").config();
 
 const app: Express = express();
-const port: number = Number(process.env.EXPRESS_PORT) || 3060;
+const port: number = Number(process.env.EXPRESS_PORT) || 3000;
 
 app.use(
   bodyParser.urlencoded({
@@ -48,3 +48,5 @@ app.use("/user", passport.authenticate("jwt", { session: false }), user);
 app.use("/chat", chat);
 
 app.listen(port, () => console.log(`Application is running on port ${port}`));
+
+module.exports = app;
